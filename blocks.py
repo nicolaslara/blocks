@@ -1,4 +1,6 @@
 """
+A decorator to use Python functions in a way similar to Ruby blocks.
+
 =========
  Missing
 =========
