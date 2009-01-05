@@ -2,20 +2,9 @@
 =========
  Missing
 =========
- * Test some with generators (yield)
  * Implement some default ruby ones
- * Test classes ... OK
  * Add doctests
- * Ensure the hack works
-
-=======
- Links
-=======
- * http://mail.python.org/pipermail/python-list/2004-July/270951.html
- * http://mail.python.org/pipermail/python-list/2000-December/062733.html
- * http://svn.colorstudy.com/home/ianb/ruby_blocks.py 
- * http://www.robertsosinski.com/2008/12/21/understanding-ruby-blocks-procs-and-lambdas/
-
+ * Organize in different files. (decorators.py, defaults.py)
 """
 
 import types
@@ -29,7 +18,7 @@ def receive_block(func):
             instance, block = args
             
         # Add block to globals
-        scope = globals()
+        scope = func.func_globals #globals()
         scope.update({'block':block})
 
         #create the function with the new scope
@@ -42,21 +31,20 @@ def receive_block(func):
 
     return decorator
 
-
 @receive_block
 def external():
     for i in [1,2,3]:
         print block()
 
-@receive_block
-def param_external():
-    for i in [1,2,3]:
-        print block(i)
-
 print "External"
 @external
 def _():
     return "a"
+
+@receive_block
+def param_external():
+    for i in [1,2,3]:
+        print block(i)
 
 print "External with param"
 @param_external
